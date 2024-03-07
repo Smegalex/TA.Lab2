@@ -36,7 +36,6 @@ def countInversions(arr):
 def sortAccording(arr: list, accordingTo: list) -> dict:
     dic = sorted(dict(zip(accordingTo, arr)).items())
     returnable = {k: v for k, v in dic}
-    print(returnable)
     return returnable
 
 
@@ -67,7 +66,7 @@ def calculateRanking(matrix, compareTo):
 
 def fileRead(fileName: str) -> list:
     returnable = []
-    with open(fileName, "r") as filey:
+    with open(f"./{fileName}", "r") as filey:
         filey = filey.readlines()
         returnable.append(filey[0].split())
         returnable.append([])
@@ -98,7 +97,7 @@ matrix = [
     [10, 3, 1, 2, 4, 5]
 ]
 
-def full_cycle(fileName: str, resultDir: str = "")->None:
+def full_cycle(fileName: str, prefferedUser: int = 'all', resultDir: str = "")->None:
     resultDir = resultDir + "/"
     filey = fileRead(fileName)
     customers = filey[0][0]
@@ -107,10 +106,50 @@ def full_cycle(fileName: str, resultDir: str = "")->None:
 
     path = fileName.replace('.txt', '') + '_result'
 
-
-    for customer in range(1, int(customers)+1):
-        rankings = calculateRanking(filey, customer)
-        fileWrite(f"./{resultDir}{path}_{customer}", rankings, customer)
+    if prefferedUser == 'all':
+        for customer in range(1, int(customers)+1):
+            rankings = calculateRanking(filey, customer)
+            fileWrite(f"./{resultDir}{path}_{customer}.txt", rankings, customer)
+    else:
+        rankings = calculateRanking(filey, prefferedUser)
+        fileWrite(f"./{resultDir}{path}_{prefferedUser}.txt", rankings, prefferedUser)
     
+if __name__=="__main__":
+    full_cycle('example_inputs/input_2_1000.txt', 1,'actual_outputs')
+    full_cycle('example_inputs/input_2_1000.txt', 2,'actual_outputs')
 
-full_cycle('example.txt', 'results')
+    full_cycle('example_inputs/input_3_5.txt', resultDir='actual_outputs')
+
+    full_cycle('example_inputs/input_5_5.txt', 4,'actual_outputs')
+    full_cycle('example_inputs/input_5_5.txt', 5,'actual_outputs')
+
+    full_cycle('example_inputs/input_5_10.txt', 3,'actual_outputs')
+    full_cycle('example_inputs/input_5_10.txt', 4,'actual_outputs')
+
+    full_cycle('example_inputs/input_10_5.txt', 6,'actual_outputs')
+    full_cycle('example_inputs/input_10_5.txt', 9,'actual_outputs')
+    full_cycle('example_inputs/input_10_5.txt', 10,'actual_outputs')
+
+    full_cycle('example_inputs/input_22_7.txt', 1,'actual_outputs')
+    full_cycle('example_inputs/input_22_7.txt', 10,'actual_outputs')
+
+    full_cycle('example_inputs/input_240_5.txt', 1,'actual_outputs')
+    full_cycle('example_inputs/input_240_5.txt', 100,'actual_outputs')
+
+    full_cycle('example_inputs/input_720_6.txt', 1,'actual_outputs')
+    full_cycle('example_inputs/input_720_6.txt', 100,'actual_outputs')
+
+    full_cycle('example_inputs/input_1000_5.txt', 289,'actual_outputs')
+    full_cycle('example_inputs/input_1000_5.txt', 356,'actual_outputs')
+    full_cycle('example_inputs/input_1000_5.txt', 674,'actual_outputs')
+
+    full_cycle('example_inputs/input_1000_100.txt', 95,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 206,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 210,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 231,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 306,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 430,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 552,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 572,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 719,'actual_outputs')
+    full_cycle('example_inputs/input_1000_100.txt', 847,'actual_outputs')
