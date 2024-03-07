@@ -1,3 +1,8 @@
+import random
+import time
+from time_inputs.generate import document_sizes 
+
+
 def sortAndCountInv(arr):
     if len(arr) <= 1:
         return arr, 0
@@ -97,59 +102,73 @@ matrix = [
     [10, 3, 1, 2, 4, 5]
 ]
 
-def full_cycle(fileName: str, prefferedUser: int = 'all', resultDir: str = "")->None:
+
+def full_cycle(fileName: str, prefferedUser: int = 'all', resultDir: str = "") -> None:
+    st_time = time.time_ns()
+
     resultDir = resultDir + "/"
     filey = fileRead(fileName)
     customers = filey[0][0]
     movies = filey[0][1]
     filey = filey[1]
 
-    path = fileName.replace('.txt', '') + '_result'
+    path = fileName.replace('.txt', '_result')
 
     if prefferedUser == 'all':
         for customer in range(1, int(customers)+1):
             rankings = calculateRanking(filey, customer)
-            fileWrite(f"./{resultDir}{path}_{customer}.txt", rankings, customer)
+            fileWrite(f"./{resultDir}{path}_{customer}.txt",
+                      rankings, customer)
     else:
         rankings = calculateRanking(filey, prefferedUser)
-        fileWrite(f"./{resultDir}{path}_{prefferedUser}.txt", rankings, prefferedUser)
-    
-if __name__=="__main__":
-    full_cycle('example_inputs/input_2_1000.txt', 1,'actual_outputs')
-    full_cycle('example_inputs/input_2_1000.txt', 2,'actual_outputs')
+        fileWrite(f"./{resultDir}{path}_{prefferedUser}.txt",
+                  rankings, prefferedUser)
 
-    full_cycle('example_inputs/input_3_5.txt', resultDir='actual_outputs')
+    end_time = time.time_ns()
+    full_time = end_time - st_time
 
-    full_cycle('example_inputs/input_5_5.txt', 4,'actual_outputs')
-    full_cycle('example_inputs/input_5_5.txt', 5,'actual_outputs')
+    print(f"{fileName.replace('.txt', '')} user {prefferedUser} took time: {full_time} nanoseconds")
 
-    full_cycle('example_inputs/input_5_10.txt', 3,'actual_outputs')
-    full_cycle('example_inputs/input_5_10.txt', 4,'actual_outputs')
 
-    full_cycle('example_inputs/input_10_5.txt', 6,'actual_outputs')
-    full_cycle('example_inputs/input_10_5.txt', 9,'actual_outputs')
-    full_cycle('example_inputs/input_10_5.txt', 10,'actual_outputs')
+if __name__ == "__main__":
+    for i, (rows, columns) in enumerate(document_sizes, start=1):
+        fileName = f"time_{rows}_{columns}.txt"
+        full_cycle(f'time_inputs/{fileName}', 'all', 'actual_outputs') #random.randrange(1, rows)
+    # full_cycle('example_inputs/input_2_1000.txt', 1, 'actual_outputs')
+    # full_cycle('example_inputs/input_2_1000.txt', 2, 'actual_outputs')
 
-    full_cycle('example_inputs/input_22_7.txt', 1,'actual_outputs')
-    full_cycle('example_inputs/input_22_7.txt', 10,'actual_outputs')
+    # full_cycle('example_inputs/input_3_5.txt', resultDir='actual_outputs')
 
-    full_cycle('example_inputs/input_240_5.txt', 1,'actual_outputs')
-    full_cycle('example_inputs/input_240_5.txt', 100,'actual_outputs')
+    # full_cycle('example_inputs/input_5_5.txt', 4, 'actual_outputs')
+    # full_cycle('example_inputs/input_5_5.txt', 5, 'actual_outputs')
 
-    full_cycle('example_inputs/input_720_6.txt', 1,'actual_outputs')
-    full_cycle('example_inputs/input_720_6.txt', 100,'actual_outputs')
+    # full_cycle('example_inputs/input_5_10.txt', 3, 'actual_outputs')
+    # full_cycle('example_inputs/input_5_10.txt', 4, 'actual_outputs')
 
-    full_cycle('example_inputs/input_1000_5.txt', 289,'actual_outputs')
-    full_cycle('example_inputs/input_1000_5.txt', 356,'actual_outputs')
-    full_cycle('example_inputs/input_1000_5.txt', 674,'actual_outputs')
+    # full_cycle('example_inputs/input_10_5.txt', 6, 'actual_outputs')
+    # full_cycle('example_inputs/input_10_5.txt', 9, 'actual_outputs')
+    # full_cycle('example_inputs/input_10_5.txt', 10, 'actual_outputs')
 
-    full_cycle('example_inputs/input_1000_100.txt', 95,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 206,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 210,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 231,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 306,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 430,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 552,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 572,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 719,'actual_outputs')
-    full_cycle('example_inputs/input_1000_100.txt', 847,'actual_outputs')
+    # full_cycle('example_inputs/input_22_7.txt', 1, 'actual_outputs')
+    # full_cycle('example_inputs/input_22_7.txt', 10, 'actual_outputs')
+
+    # full_cycle('example_inputs/input_240_5.txt', 1, 'actual_outputs')
+    # full_cycle('example_inputs/input_240_5.txt', 100, 'actual_outputs')
+
+    # full_cycle('example_inputs/input_720_6.txt', 1, 'actual_outputs')
+    # full_cycle('example_inputs/input_720_6.txt', 100, 'actual_outputs')
+
+    # full_cycle('example_inputs/input_1000_5.txt', 289, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_5.txt', 356, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_5.txt', 674, 'actual_outputs')
+
+    # full_cycle('example_inputs/input_1000_100.txt', 95, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 206, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 210, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 231, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 306, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 430, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 552, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 572, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 719, 'actual_outputs')
+    # full_cycle('example_inputs/input_1000_100.txt', 847, 'actual_outputs')
